@@ -1,0 +1,64 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Главная</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a33;--text:#e8ecff;--muted:#9aa3c7;--accent:#7aa2ff;--accent2:#64d2ff;--card:#0f1730;--border:#233055}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--bg),#0d1430 60%,#0b1020);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--text)}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.header{position:sticky;top:0;background:rgba(15,23,48,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:10}
+.nav{display:flex;gap:12px;flex-wrap:wrap;padding:12px 0}
+.nav a{padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0e1530);transition:.2s}
+.nav a:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.25);border-color:var(--accent)}
+.main{padding:24px 0}
+h1{font-size:30px;margin:8px 0}
+.lead{color:var(--muted)}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px}
+.card{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,#121a33,#0f1730);padding:16px}
+.card h3{margin:0 0 6px 0}
+.card p{color:var(--muted);margin:0 0 10px 0}
+.btn{display:inline-block;padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0f1730);margin-top:10px}
+.btn:hover{border-color:var(--accent)}
+.footer{color:var(--muted);font-size:14px;padding-bottom:20px}
+</style></head>
+<body>
+<header class="header"><div class="container"><nav class="nav"><a href="index.html" style="border-color: var(--accent);">Главная</a><a href="os.html">Операционная система</a><a href="diagnostics.html">Средства диагностики и мониторинга</a><a href="virtual_media.html">Средства обслуживания виртуальных носителей</a><a href="fs_partition.html">Выбор ФС и разметка жёсткого диска</a><a href="gallery.html" style="border-color: var(--accent2);">🖼️ Галерея</a></nav></div></header>
+<main class="container main">
+<h1>Создание веб-ресурса</h1>
+<p class="lead">Разработка Web‑страницы с описанием разделов системного программного обеспечения.</p>
+<div class="card">
+<p><strong>Автор:</strong> Левин Юрий Павлович</p>
+<p><strong>Преподаватель:</strong> Евстратов В.С.</p>
+</div>
+<div class="grid-3">
+<div class="card">
+<h3>Операционная система</h3>
+<p>История и особенности Windows XP: архитектура, преимущества, эволюция.</p>
+<a class="btn" href="os.html">Перейти →</a>
+</div>
+<div class="card">
+<h3>Средства диагностики и мониторинга</h3>
+<p>Практика с AIDA64, HWiNFO и Everest: датчики, бенчмарки, стресс‑тесты, отчёты.</p>
+<a class="btn" href="diagnostics.html">Перейти →</a>
+</div>
+<div class="card">
+<h3>Обслуживание виртуальных носителей</h3>
+<p>Работа с ISO‑образами, запись, проверка целостности (раздел заготовлен).</p>
+<a class="btn" href="virtual_media.html">Перейти →</a>
+</div>
+<div class="card">
+<h3>Выбор ФС и разметка диска</h3>
+<p>Сравнение FAT32/NTFS, базовые сценарии разметки (раздел заготовлен).</p>
+<a class="btn" href="fs_partition.html">Перейти →</a>
+</div>
+<div class="card" style="border-color: var(--accent2);">
+<h3>🖼️ Галерея изображений</h3>
+<p>Просмотр всех скриншотов и изображений проекта в удобном формате.</p>
+<a class="btn" href="gallery.html" style="border-color: var(--accent2);">Открыть галерею →</a>
+</div>
+</div>
+</main>
+<footer class="container footer">Веб-страница • Главная</footer>
+</body></html>
+

@@ -1,0 +1,177 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Галерея изображений</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a33;--text:#e8ecff;--muted:#9aa3c7;--accent:#7aa2ff;--accent2:#64d2ff;--border:#233055}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--bg),#0d1430 60%,#0b1020);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--text)}
+a{color:inherit;text-decoration:none}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+.header{position:sticky;top:0;background:rgba(15,23,48,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:10}
+.nav{display:flex;gap:12px;flex-wrap:wrap;padding:12px 0}
+.nav a{padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0e1530);transition:.2s}
+.nav a:hover{transform:translateY(-1px);border-color:var(--accent)}
+.main{padding:24px 0}
+h1{font-size:32px;margin:8px 0;text-align:center;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:24px}
+.gallery-item{position:relative;border:1px solid var(--border);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#121a33,#0f1730);cursor:pointer;transition:all 0.4s cubic-bezier(0.4,0,0.2,1)}
+.gallery-item:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 40px rgba(122,162,255,0.3);border-color:var(--accent2)}
+.gallery-item img{width:100%;height:200px;object-fit:cover;display:block;transition:transform 0.4s ease}
+.gallery-item:hover img{transform:scale(1.1)}
+.gallery-item .overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.9));padding:16px 12px 12px;opacity:0;transform:translateY(20px);transition:all 0.4s ease}
+.gallery-item:hover .overlay{opacity:1;transform:translateY(0)}
+.gallery-item .overlay p{margin:0;font-size:13px;color:var(--text);text-align:center}
+.lightbox{display:none;position:fixed;z-index:10000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.95);backdrop-filter:blur(10px)}
+.lightbox.active{animation:fadeIn 0.4s ease forwards}
+.lightbox.closing{animation:fadeOut 0.4s ease forwards}
+.lightbox-content{position:relative;margin:auto;display:block;max-width:90%;max-height:85vh;top:50%;transform:translateY(-50%) scale(0.8);border-radius:12px;border:2px solid var(--accent);animation:zoomIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards}
+.lightbox-caption{text-align:center;color:var(--muted);padding:20px;font-size:16px;animation:slideUp 0.5s ease 0.3s forwards;opacity:0}
+.lightbox-close{position:absolute;top:20px;right:30px;color:var(--text);font-size:48px;cursor:pointer;transition:0.3s;z-index:10001;line-height:1}
+.lightbox-close:hover{color:var(--accent2);transform:rotate(90deg) scale(1.2)}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);color:var(--text);font-size:42px;cursor:pointer;padding:20px;transition:0.3s;z-index:10001;user-select:none}
+.lightbox-nav:hover{color:var(--accent2);transform:translateY(-50%) scale(1.2)}
+.lightbox-prev{left:10px}
+.lightbox-next{right:10px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+@keyframes zoomIn{from{transform:translateY(-50%) scale(0.8);opacity:0}to{transform:translateY(-50%) scale(1);opacity:1}}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.loading{text-align:center;color:var(--muted);padding:40px;font-size:16px}
+.footer{color:var(--muted);font-size:14px;padding-bottom:20px;text-align:center}
+</style></head>
+<body>
+<header class="header"><div class="container"><nav class="nav">
+<a href="index.html">Главная</a>
+<a href="os.html">Операционная система</a>
+<a href="diagnostics.html">Средства диагностики и мониторинга</a>
+<a href="virtual_media.html">Средства обслуживания виртуальных носителей</a>
+<a href="fs_partition.html">Выбор ФС и разметка жёсткого диска</a>
+</nav></div></header>
+<main class="container main">
+<h1>🖼️ Галерея изображений проекта</h1>
+<p class="lead" style="text-align:center">Кликните на изображение для просмотра в полном размере</p>
+<div class="gallery-grid" id="gallery">
+<div class="loading">Загрузка галереи...</div>
+</div>
+</main>
+<div id="lightbox" class="lightbox">
+<span class="lightbox-close">&times;</span>
+<span class="lightbox-nav lightbox-prev">&#10094;</span>
+<span class="lightbox-nav lightbox-next">&#10095;</span>
+<img class="lightbox-content" id="lightbox-img">
+<div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+<footer class="container footer">Веб-страница • Галерея</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const gallery = document.getElementById('gallery');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCaption = document.getElementById('lightbox-caption');
+const closeBtn = document.querySelector('.lightbox-close');
+const prevBtn = document.querySelector('.lightbox-prev');
+const nextBtn = document.querySelector('.lightbox-next');
+
+const images = [
+{src:'img/aida_exp1_sensors_1.png',alt:'AIDA64 — получение информации датчиков'},
+{src:'img/aida_exp1_sensors_2.png',alt:'AIDA64 — панель с индикаторами'},
+{src:'img/aida_exp2_stress_open.jpg',alt:'AIDA64 — запуск System Stability Test'},
+{src:'img/aida_exp2_stress_run.jpg',alt:'AIDA64 — Stress Test в работе'},
+{src:'img/aida_exp3_stability_1.png',alt:'AIDA64 — запуск теста памяти'},
+{src:'img/aida_exp3_stability_2.png',alt:'AIDA64 — результаты теста памяти'},
+{src:'img/aida_exp4_gpgpu_open.png',alt:'AIDA64 — запуск GPGPU Benchmark'},
+{src:'img/aida_exp4_gpgpu_results.png',alt:'AIDA64 — результаты GPGPU'},
+{src:'img/aida_exp5_report_start.png',alt:'AIDA64 — мастер отчётов, старт'},
+{src:'img/aida_exp5_report_profile.png',alt:'AIDA64 — профили отчёта'},
+{src:'img/aida_exp5_report_format.png',alt:'AIDA64 — формат отчёта'},
+{src:'img/aida_exp5_report_ready.png',alt:'AIDA64 — готовый отчёт'},
+{src:'img/1.jpg',alt:'HWiNFO — CPU Summary'},
+{src:'img/2.jpg',alt:'HWiNFO — CPU Summary'},
+{src:'img/3.jpg',alt:'HWiNFO — CPU Summary'},
+{src:'img/4.jpg',alt:'HWiNFO — Sensors table'},
+{src:'img/5.jpg',alt:'HWiNFO — Sensors graphs'},
+{src:'img/6.jpg',alt:'HWiNFO — Sensors graphs'},
+{src:'img/7.jpg',alt:'HWiNFO — Create Logfile'},
+{src:'img/8.jpg',alt:'HWiNFO — текстовый отчёт'},
+{src:'img/9.jpg',alt:'HWiNFO — System Summary'},
+{src:'img/everest_disk_menu.jpg',alt:'Everest — запуск Disk Benchmark'},
+{src:'img/everest_disk_benchmark.jpg',alt:'Everest — Disk Benchmark'},
+{src:'img/13.jpg',alt:'Everest — вызов Stability Test'},
+{src:'img/14.jpg',alt:'Everest — стресс‑тест запущен'},
+{src:'img/everest_cpu_tests_icons.jpg',alt:'Everest — выбор CPU тестов'},
+{src:'img/everest_cpu_results_table.jpg',alt:'Everest — результаты CPU тестов'},
+{src:'img/15.jpg',alt:'Everest — Cache & Memory Benchmark'},
+{src:'img/10.jpg',alt:'Everest — мастер отчётов старт'},
+{src:'img/11.jpg',alt:'Everest — мастер отчётов профили'},
+{src:'img/12.jpg',alt:'Everest — готовый отчёт'}
+];
+
+let currentIndex = 0;
+gallery.innerHTML = '';
+
+images.forEach((img, index) => {
+const item = document.createElement('div');
+item.className = 'gallery-item';
+item.style.opacity = '0';
+item.style.animation = `fadeIn 0.5s ease ${index * 0.03}s forwards`;
+item.innerHTML = `
+<img src="${img.src}" alt="${img.alt}" onerror="this.parentElement.style.display='none'">
+<div class="overlay"><p>${img.alt}</p></div>
+`;
+item.addEventListener('click', () => openLightbox(index));
+gallery.appendChild(item);
+});
+
+function openLightbox(index) {
+currentIndex = index;
+updateLightboxImage();
+lightbox.style.display = 'block';
+lightbox.classList.remove('closing');
+lightbox.classList.add('active');
+document.body.style.overflow = 'hidden';
+}
+
+function updateLightboxImage() {
+lightboxImg.src = images[currentIndex].src;
+lightboxCaption.textContent = images[currentIndex].alt;
+}
+
+function closeLightbox() {
+lightbox.classList.remove('active');
+lightbox.classList.add('closing');
+setTimeout(() => {
+lightbox.style.display = 'none';
+lightbox.classList.remove('closing');
+document.body.style.overflow = '';
+}, 400);
+}
+
+function showPrev() {
+currentIndex = (currentIndex - 1 + images.length) % images.length;
+updateLightboxImage();
+}
+
+function showNext() {
+currentIndex = (currentIndex + 1) % images.length;
+updateLightboxImage();
+}
+
+closeBtn.addEventListener('click', closeLightbox);
+prevBtn.addEventListener('click', showPrev);
+nextBtn.addEventListener('click', showNext);
+
+lightbox.addEventListener('click', (e) => {
+if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+if (lightbox.style.display === 'block') {
+if (e.key === 'Escape') closeLightbox();
+else if (e.key === 'ArrowLeft') showPrev();
+else if (e.key === 'ArrowRight') showNext();
+}
+});
+});
+</script>
+</body></html>
+

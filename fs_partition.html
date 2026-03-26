@@ -1,0 +1,80 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Выбор ФС и разметка жёсткого диска</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a33;--text:#e8ecff;--muted:#9aa3c7;--accent:#7aa2ff;--accent2:#64d2ff;--border:#233055}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--bg),#0d1430 60%,#0b1020);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--text)}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.header{position:sticky;top:0;background:rgba(15,23,48,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:10}
+.nav{display:flex;gap:12px;flex-wrap:wrap;padding:12px 0}
+.nav a{padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0e1530);transition:.2s}
+.nav a:hover{transform:translateY(-1px);border-color:var(--accent)}
+.main{padding:24px 0}
+h1{font-size:30px;margin:8px 0}
+.lead{color:var(--muted)}
+.section{border:1px solid var(--border);border-radius:16px;padding:16px;background:linear-gradient(180deg,#121a33,#0f1730);margin-top:18px}
+.btn{display:inline-block;padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0f1730);margin-top:12px}
+.btn:hover{border-color:var(--accent)}
+ul{margin-top:6px}
+</style></head>
+<body>
+<header class="header"><div class="container"><nav class="nav"><a href="index.html">Главная</a><a href="os.html">Операционная система</a><a href="diagnostics.html">Средства диагностики и мониторинга</a><a href="virtual_media.html">Средства обслуживания виртуальных носителей</a><a href="fs_partition.html" style="border-color: var(--accent);">Выбор ФС и разметка жёсткого диска</a></nav></div></header>
+<main class="container main">
+<h1>Выбор ФС и разметка жёсткого диска</h1>
+<p class="lead">Обоснование выбора файловой системы и практическая схема разметки для курсовой по Windows XP.</p>
+
+<div class="section">
+  <h2>Файловая система (ФС)</h2>
+  <p>Файловая система — это способ организации, хранения и управления данными на носителе информации (жестком диске, SSD, флеш-накопителе). Она определяет, как файлы хранятся, индексируются, читаются и записываются, а также какие атрибуты и разрешения можно задать для каждого файла.</p>
+  <p>В рамках системного программного обеспечения выбор файловой системы влияет на производительность, надёжность хранения, совместимость с ОС и возможности по восстановлению данных.</p>
+</div>
+
+<div class="section">
+  <h2>Выбор NTFS для Windows XP</h2>
+  <p>В связи с тем, что в рамках курсовой работы используется Windows XP, наиболее логичным и оптимальным выбором является NTFS. Эта файловая система:</p>
+  <ul>
+    <li>полностью поддерживается выбранной ОС;</li>
+    <li>надёжна при работе с большими объёмами данных;</li>
+    <li>позволяет устанавливать права доступа и защищать файлы;</li>
+    <li>совместима с современными утилитами резервного копирования и восстановления.</li>
+  </ul>
+  <p>NTFS используется по умолчанию при установке Windows и не требует дополнительных действий по форматированию, что упрощает настройку системы для начинающих пользователей.</p>
+</div>
+
+<div class="section">
+  <h2>Разметка жёсткого диска</h2>
+  <p>Для данной курсовой работы предлагается следующая схема разметки жёсткого диска:</p>
+  <ul>
+    <li><strong>Общий объём накопителя:</strong> 10 ГБ</li>
+    <li><strong>Раздел C:</strong> (системный) — 5 ГБ</li>
+    <li><strong>Раздел D:</strong> (пользовательский) — 5 ГБ</li>
+  </ul>
+  <p><strong>Цель разметки:</strong></p>
+  <ul>
+    <li>Разделение системных и пользовательских данных;</li>
+    <li>Повышение удобства резервного копирования и восстановления;</li>
+    <li>Обеспечение безопасности и структурированности хранения информации.</li>
+  </ul>
+  <p><strong>Раздел C</strong> выделен под систему и содержит:</p>
+  <ul>
+    <li>Операционную систему Windows XP;</li>
+    <li>Системные файлы и программы;</li>
+    <li>Временные файлы.</li>
+  </ul>
+  <p><strong>Раздел D</strong> выделен под пользовательские данные и содержит:</p>
+  <ul>
+    <li>Документы курсовой работы;</li>
+    <li>Резервные копии;</li>
+    <li>Рабочие файлы и архивы;</li>
+    <li>Материалы для веб-сайта и презентации.</li>
+  </ul>
+</div>
+
+<p><a class="btn" href="index.html">← В меню</a></p>
+</main>
+<footer class="container" style="color:var(--muted);font-size:14px;padding-bottom:20px">
+  Веб-страница • Выбор ФС и разметка жёсткого диска
+</footer>
+</body></html>

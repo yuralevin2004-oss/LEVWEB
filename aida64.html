@@ -1,0 +1,177 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>AIDA64 — эксперименты</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a33;--text:#e8ecff;--muted:#9aa3c7;--accent:#7aa2ff;--border:#233055}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--bg),#0d1430 60%,#0b1020);font-family:system-ui,-apple-system,Segoe UI,Inter,Arial,sans-serif;color:var(--text)}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.header{position:sticky;top:0;background:rgba(15,23,48,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:10}
+.nav{display:flex;gap:12px;flex-wrap:wrap;padding:12px 0}
+.nav a{padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0e1530);transition:.2s}
+.nav a:hover{transform:translateY(-1px);border-color:var(--accent)}
+.main{padding:24px 0}
+.section{border:1px solid var(--border);border-radius:16px;padding:16px;background:linear-gradient(180deg,#121a33,#0f1730);margin-top:18px}
+.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:12px}
+.figure{border:1px dashed var(--border);border-radius:12px;padding:8px;background:#0e1631}
+.figure img{width:100%;height:auto;border-radius:8px;display:block;cursor:pointer;transition:all 0.3s ease}
+.figure img:hover{transform:scale(1.03);box-shadow:0 0 20px rgba(122,162,255,0.4);border-color:var(--accent)}
+.figcap{font-size:13px;color:var(--muted);margin-top:6px}
+.btn{display:inline-block;padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0f1730);margin-top:12px}
+.placeholder{border:1px dashed var(--border);border-radius:12px;padding:16px;text-align:center;color:var(--muted);background:#0e1631}
+.lightbox{display:none;position:fixed;z-index:10000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.95);backdrop-filter:blur(10px)}
+.lightbox.active{animation:fadeIn 0.4s ease forwards}
+.lightbox.closing{animation:fadeOut 0.4s ease forwards}
+.lightbox-content{position:relative;margin:auto;display:block;max-width:90%;max-height:85vh;top:50%;transform:translateY(-50%) scale(0.8);border-radius:12px;border:2px solid var(--accent);animation:zoomIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards}
+.lightbox-caption{text-align:center;color:var(--muted);padding:20px;font-size:16px;animation:slideUp 0.5s ease 0.3s forwards;opacity:0}
+.lightbox-close{position:absolute;top:20px;right:30px;color:var(--text);font-size:48px;cursor:pointer;transition:0.3s;z-index:10001;line-height:1}
+.lightbox-close:hover{color:var(--accent);transform:rotate(90deg) scale(1.2)}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);color:var(--text);font-size:42px;cursor:pointer;padding:20px;transition:0.3s;z-index:10001;user-select:none}
+.lightbox-nav:hover{color:var(--accent);transform:translateY(-50%) scale(1.2)}
+.lightbox-prev{left:10px}
+.lightbox-next{right:10px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeOut{from{opacity:1}to{opacity:0}}
+@keyframes zoomIn{from{transform:translateY(-50%) scale(0.8);opacity:0}to{transform:translateY(-50%) scale(1);opacity:1}}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+</style></head>
+<body>
+<header class="header"><div class="container">
+<nav class="nav">
+<a href="index.html">Главная</a>
+<a href="os.html">Операционная система</a>
+<a href="diagnostics.html" style="border-color: var(--accent);">Средства диагностики и мониторинга</a>
+<a href="virtual_media.html">Средства обслуживания виртуальных носителей</a>
+<a href="fs_partition.html">Выбор ФС и разметка жёсткого диска</a>
+<a href="gallery.html" style="border-color: var(--accent);">🖼️ Галерея</a>
+</nav></div></header>
+<main class="container main">
+<p><a class="btn" href="diagnostics.html">← К разделу «Средства диагностики и мониторинга»</a></p>
+<h2>AIDA64 — набор экспериментов</h2>
+<p class="lead">Пять экспериментов под Windows XP: датчики, стресс‑тест, тест памяти/кэша, GPGPU и отчёт.</p>
+<div class="section">
+<h3>Эксперимент 1. Получение информации датчиков</h3>
+<p>В AIDA64 раздел «Датчики» собирает телеметрию: температуры, частоты, напряжения, скорость вентиляторов и др.
+Это позволяет следить за состоянием ПК в реальном времени и быстро выявлять перегревы/троттлинг.</p>
+<div class="grid-2">
+<div class="figure"><img src="img/aida_exp1_sensors_1.png" alt="AIDA64 — получение информации датчиков" class="clickable-img"><div class="figcap">Вызов функции «Получение информации датчиков».</div></div>
+<div class="figure"><img src="img/aida_exp1_sensors_2.png" alt="AIDA64 — панель с индикаторами" class="clickable-img"><div class="figcap">Визуальная панель с индикаторами для CPU/GPU.</div></div>
+</div>
+</div>
+<div class="section">
+<h3>Эксперимент 2. Тест стабильности системы</h3>
+<p>Стресс‑тест нагружает CPU/FPU/кэш/память.</p>
+<div class="grid-2">
+<div class="figure"><img src="img/aida_exp2_stress_open.jpg" alt="AIDA64 — запуск System Stability Test" class="clickable-img"><div class="figcap">Запуск System Stability Test.</div></div>
+<div class="figure"><img src="img/aida_exp2_stress_run.jpg" alt="AIDA64 — Stress Test в работе" class="clickable-img"><div class="figcap">Графики температур и загрузки при стресс‑тесте.</div></div>
+</div>
+</div>
+<div class="section">
+<h3>Эксперимент 3. Тест памяти</h3>
+<p>Измеряет количество свободной памяти</p>
+<div class="grid-2">
+<div class="figure"><img src="img/aida_exp3_stability_1.png" alt="AIDA64 — запуск теста памяти" class="clickable-img"><div class="figcap">Запуск.</div></div>
+<div class="figure"><img src="img/aida_exp3_stability_2.png" alt="AIDA64 — результаты теста памяти" class="clickable-img"><div class="figcap">Окно с результатами.</div></div>
+</div>
+</div>
+<div class="section">
+<h3>Эксперимент 4. Тест GPGPU</h3>
+<p>GPGPU тест оценивает пропускную способность памяти и вычислительную производительность (FLOPS) для задач общего назначения.</p>
+<div class="grid-2">
+<div class="figure"><img src="img/aida_exp4_gpgpu_open.png" alt="AIDA64 — запуск GPGPU Benchmark" class="clickable-img"><div class="figcap">Запуск GPGPU Benchmark.</div></div>
+<div class="figure"><img src="img/aida_exp4_gpgpu_results.png" alt="AIDA64 — результаты GPGPU" class="clickable-img"><div class="figcap">Окно с результатами GPGPU.</div></div>
+</div>
+</div>
+<div class="section">
+<h3>Эксперимент 5. Создание отчёта</h3>
+<p>Через мастер отчётов формируется детальный документ о конфигурации ПК.</p>
+<div class="grid-2">
+<div class="figure"><img src="img/aida_exp5_report_start.png" alt="AIDA64 — мастер отчётов, старт" class="clickable-img"><div class="figcap">Старт мастера отчётов.</div></div>
+<div class="figure"><img src="img/aida_exp5_report_profile.png" alt="AIDA64 — профили отчёта" class="clickable-img"><div class="figcap">Выбор профиля: все/аппаратные/программные/тестовые.</div></div>
+</div>
+<div class="grid-2">
+<div class="figure"><img src="img/aida_exp5_report_format.png" alt="AIDA64 — формат отчёта" class="clickable-img"><div class="figcap">Выбор формата (TXT/HTML/MHTML).</div></div>
+<div class="figure"><img src="img/aida_exp5_report_ready.png" alt="AIDA64 — готовый отчёт" class="clickable-img"><div class="figcap">Просмотр готового текстового отчёта.</div></div>
+</div>
+</div>
+</main>
+<footer class="container" style="color:var(--muted);font-size:14px;padding-bottom:20px">
+Веб-страница • AIDA64
+</footer>
+<div id="lightbox" class="lightbox">
+<span class="lightbox-close">&times;</span>
+<span class="lightbox-nav lightbox-prev">&#10094;</span>
+<span class="lightbox-nav lightbox-next">&#10095;</span>
+<img class="lightbox-content" id="lightbox-img">
+<div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCaption = document.getElementById('lightbox-caption');
+const closeBtn = document.querySelector('.lightbox-close');
+const prevBtn = document.querySelector('.lightbox-prev');
+const nextBtn = document.querySelector('.lightbox-next');
+const images = document.querySelectorAll('.clickable-img');
+let currentIndex = 0;
+const imgArray = Array.from(images);
+
+images.forEach((img, index) => {
+img.addEventListener('click', function() {
+currentIndex = index;
+openLightbox();
+});
+});
+
+function openLightbox() {
+lightboxImg.src = imgArray[currentIndex].src;
+lightboxCaption.textContent = imgArray[currentIndex].alt;
+lightbox.style.display = 'block';
+lightbox.classList.remove('closing');
+lightbox.classList.add('active');
+document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+lightbox.classList.remove('active');
+lightbox.classList.add('closing');
+setTimeout(() => {
+lightbox.style.display = 'none';
+lightbox.classList.remove('closing');
+document.body.style.overflow = '';
+}, 400);
+}
+
+function showPrev() {
+currentIndex = (currentIndex - 1 + imgArray.length) % imgArray.length;
+lightboxImg.src = imgArray[currentIndex].src;
+lightboxCaption.textContent = imgArray[currentIndex].alt;
+}
+
+function showNext() {
+currentIndex = (currentIndex + 1) % imgArray.length;
+lightboxImg.src = imgArray[currentIndex].src;
+lightboxCaption.textContent = imgArray[currentIndex].alt;
+}
+
+closeBtn.addEventListener('click', closeLightbox);
+prevBtn.addEventListener('click', showPrev);
+nextBtn.addEventListener('click', showNext);
+
+lightbox.addEventListener('click', (e) => {
+if (e.target === lightbox) closeLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+if (lightbox.style.display === 'block') {
+if (e.key === 'Escape') closeLightbox();
+else if (e.key === 'ArrowLeft') showPrev();
+else if (e.key === 'ArrowRight') showNext();
+}
+});
+});
+</script>
+</body></html>
+

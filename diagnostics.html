@@ -1,0 +1,84 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Средства диагностики и мониторинга</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a33;--text:#e8ecff;--muted:#9aa3c7;--accent:#7aa2ff;--accent2:#64d2ff;--card:#0f1730;--border:#233055}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:linear-gradient(180deg,var(--bg),#0d1430 60%,#0b1020);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;color:var(--text)}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.header{position:sticky;top:0;background:rgba(15,23,48,.8);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);z-index:10}
+.nav{display:flex;gap:12px;flex-wrap:wrap;padding:12px 0}
+.nav a{padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0e1530);transition:.2s}
+.nav a:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.25);border-color:var(--accent)}
+.main{padding:24px 0}
+h1{font-size:30px;margin:8px 0}
+.lead{color:var(--muted)}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:16px}
+.card{border:1px solid var(--border);border-radius:16px;background:linear-gradient(180deg,#121a33,#0f1730);padding:16px}
+.card h3{margin:0 0 6px 0}
+.card p{color:var(--muted);margin:0 0 10px 0}
+.btn{display:inline-block;padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(180deg,#121a33,#0f1730);margin-top:10px}
+.btn:hover{border-color:var(--accent)}
+.footer{color:var(--muted);font-size:14px;padding-bottom:20px}
+</style></head>
+<body>
+<header class="header"><div class="container"><nav class="nav"><a href="index.html">Главная</a><a href="os.html">Операционная система</a><a href="diagnostics.html" style="border-color: var(--accent);">Средства диагностики и мониторинга</a><a href="virtual_media.html">Средства обслуживания виртуальных носителей</a><a href="fs_partition.html">Выбор ФС и разметка жёсткого диска</a></nav></div></header>
+<main class="container main">
+<h1>Средства диагностики и мониторинга</h1>
+<p class="lead">Выберите программу для просмотра экспериментов и скриншотов.</p>
+<div class="grid-3">
+  <div class="card">
+    <h3>AIDA64</h3>
+    <p>Датчики, OSD, Stability Test, GPGPU, отчёты.</p>
+    <a class="btn" href="aida64.html">Открыть AIDA64 →</a>
+  </div>
+  <div class="card">
+    <h3>HWiNFO</h3>
+    <p>Система, бенчмарки CPU/Memory/Disk, Sensors, экспорт логов.</p>
+    <a class="btn" href="hwinfo.html">Открыть HWiNFO →</a>
+  </div>
+  <div class="card">
+    <h3>Everest</h3>
+    <p>Cache&Memory, CPU/FPU тесты, Stability Test, отчёты.</p>
+    <a class="btn" href="everest.html">Открыть Everest →</a>
+  </div>
+</div>
+<h1>Выводы по сравнению программ</h1>
+<p class="lead">Выводы по сравнению программ</p>
+
+<p class="lead">AIDA64</p>
+
+<p class="lead">Отличается широким функционалом: кроме базового мониторинга и отображения информации о железе, позволяет проводить стресс-тесты CPU, памяти и дисков, что удобно для проверки стабильности.
+
+Интерфейс интуитивный, отчёты можно сохранять в разных форматах (HTML, TXT, CSV).
+
+Подходит не только для диагностики, но и для тестирования производительности.
+
+Минус: программа платная, бесплатная версия ограничена по времени.</p>
+
+<p class="lead">HWiNFO</p>
+
+<p class="lead">Основное достоинство — детализированный мониторинг датчиков (температуры, напряжения, скорости вентиляторов, энергопотребления).
+
+Может работать в двух режимах: быстрый (только мониторинг) и полный (подробная информация о системе).
+
+Интерфейс менее удобный, чем у AIDA64, но очень богатый данными.
+
+Бесплатная, что делает её оптимальным выбором для постоянного мониторинга в реальном времени.
+
+Недостаток — меньше возможностей в стресс-тестировании и сравнительном анализе производительности.</p>
+
+<p class="lead">Everest</p>
+
+<p class="lead">Это предшественник AIDA64 (разработчики те же). Интерфейс и структура похожи.
+
+Хорошо показывает базовые сведения о системе и может формировать отчёты.
+
+Минус: программа устарела и больше не поддерживается, база данных оборудования не обновляется.
+
+Сегодня она уступает AIDA64 и HWiNFO, но может использоваться для старых систем.</p>
+<a class="btn" href="index.html">← На главную</a>
+</main>
+<footer class="container footer">Веб-страница • Средства диагностики и мониторинга</footer>
+</body></html>
